@@ -114,7 +114,7 @@ fi
 # Get self path of script.
 selfpath=$(readlink -f "$BASH_SOURCE")
 # content of crontab
-cronjob="*/5 * * * * $selfpath"
+cronjob="*/5 * * * * sudo $selfpath"
 # Check if cron is already added.
 
 grep -e "$selfpath" /etc/crontab > /dev/null
