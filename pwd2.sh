@@ -1,5 +1,5 @@
 #!/bin/bash
-# Generate password depending on the option. First arguement defines if special characters are used or not ( '-s' with special, '-r' without special)
+# Generate password depending on the option. First arguement defines if special characters are used or not ( 's' with special, 'r' without special)
 
 read -p 'Enter number of charaters: ' chnum;
 read -p "Enter character type. (s - includes special characters, r - does not include special characters) : " chtype;
@@ -26,7 +26,7 @@ alnum_passgen () {
 # Handle char type flag
 
 if [[ ! "$chtype" =~ ^('r'|'s')$ ]]; then
-	echo -e "Error! Invalid first arguement provided. \n\nAvailable options are: -s (with special numbers) -r (without special characters)" >&2 && exit 1;
+	echo -e "Error! Invalid first arguement provided. \n\nAvailable options are: s (with special numbers) r (without special characters)" >&2 && exit 1;
 fi
 
 # Handle password lenght arguement
