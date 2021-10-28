@@ -88,7 +88,7 @@ for (( i=1; i<=$max_tries; i++ )) do
         echo "Attempting restart"
         nginx_run_restart;
 	echo "Restart failed. Attempting a config restore from last backup."
-	sleep 1m;
+	sleep ${sleep_time}m;
         nginx_restore_conf;
 done
 
