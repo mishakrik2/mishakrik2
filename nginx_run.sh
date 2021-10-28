@@ -3,7 +3,6 @@
 # Make sure to run as sudo!
 # Define paths
 
-script_path=$(readlink -f "$BASH_SOURCE")
 config_path="/etc/nginx/nginx.conf"
 backup_path="${config_path}.backup"
 
