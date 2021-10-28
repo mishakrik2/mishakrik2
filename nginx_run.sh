@@ -3,6 +3,7 @@
 # Make sure to run as sudo!
 # Define paths
 
+script_path=$(readlink -f "$BASH_SOURCE")
 config_path="/etc/nginx/nginx.conf"
 backup_path="${config_path}.backup"
 
@@ -104,5 +105,22 @@ nginx_run_restart;
 if [[ ! "$(nginx_status)" == 'active'  ]]; then
 	nginx_sleep_restore;
 else
-	echo "Success! Nginx is currently $(nginx_status)." && exit 0;
+	echo "Success! Nginx is currently $(nginx_status).";
+fi
+
+
+# Cron part
+
+# Get self path of script.
+selfpath=$(readlink -f "$BASH_SOURCE")
+# content of crontab
+cronjob="*/5 * * * * $selfpath"
+# Check if cron is already added.
+
+grep -e "$selfpath" /etc/crontab > /dev/null
+
+if [[ ! $? == 0 ]]; then
+        echo "$cronjob" >> /etc/crontab
+else
+        echo "Cron already added."
 fi
