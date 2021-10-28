@@ -1,5 +1,6 @@
 #!/bin/bash
 # Generate password depending on the option. First arguement defines if special characters are used or not ( 's' with special, 'r' without special)
+# Usage example: ./pwd1.sh -s 10  - generates 10 character password with special characters.
 
 read -p 'Enter number of charaters: ' chnum;
 read -p "Enter character type. (s - includes special characters, r - does not include special characters) : " chtype;
