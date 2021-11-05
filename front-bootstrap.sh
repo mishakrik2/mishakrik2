@@ -1,16 +1,17 @@
+
 #!/bin/bash
 # Bootstrap for front instances.
 # Log in as root.
 
-#sudo su
 
 # Install s3fs dependencies.
 
-yum install -y epel-release s3fs-fuse nginx
+amazon-linux-extras install -y epel nginx1;
+yum install -y s3fs-fuse;
 
 # Create directory for a mount point.
 
-mkdir /mnt/s3fs
+mkdir /mnt/s3fs;
 
 # Mount s3 bucket to the point.
 
@@ -21,19 +22,22 @@ s3fs \
 	mkrik-bucket \
 	/mnt/s3fs
 
-# Installing PHP FPM.
 
-yum install -y yum-utils
-yum localinstall -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum localinstall -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-yum-config-manager -y --enable remi-php74
-yum makecache fast
-yum install -y php-cli php-fpm php-common php-curl php-gd php-imap php-intl php-mbstring php-xml php-zip php-bz2 php-bcmath php-json php-opcache php-devel php-mysqlnd
+# Get nginx config and start it as service.
 
-# Test PHP.
+cp /mnt/s3fs/default.conf /etc/nginx/conf.d/default.conf
+systemctl start nginx.service
+systemctl enable nginx.service
 
-php --ini | grep "Loaded Configuration File"
+# Installing PHP, starting FPM, getting configuration.
 
-# Enable the FPM as service.
+yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum --disablerepo="*" --enablerepo="remi-safe" list php[7-9][0-9].x86_64
+yum-config-manager --enable remi-php74
+yum install -y php php-mysqlnd php-fpm
+cp /mnt/s3fs/www.conf /etc/php-fpm.d/www.conf
+systemctl start php-fpm
 
-systemctl enable php-fpm
+# Retrieve static file.
+
+cp /mnt/s3fs/index.php /usr/share/nginx/html/index.php
