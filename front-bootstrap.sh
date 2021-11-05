@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Bootstrap for front instances.
 # Log in as root.
@@ -25,18 +24,19 @@ s3fs \
 
 # Get nginx config and start it as service.
 
+amazon-linux-extras enable php8.0
+yum clean metadata
+yum install php php-cli php-mysqlnd php-pdo php-common php-fpm -y
+yum install php-gd php-mbstring php-xml php-dom php-intl php-simplexml -y
+
 cp /mnt/s3fs/default.conf /etc/nginx/conf.d/default.conf
-systemctl start nginx.service
-systemctl enable nginx.service
-
-# Installing PHP, starting FPM, getting configuration.
-
-yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-yum --disablerepo="*" --enablerepo="remi-safe" list php[7-9][0-9].x86_64
-yum-config-manager --enable remi-php74
-yum install -y php php-mysqlnd php-fpm
+cp /mnt/s3fs/nginx.conf /etc/nginx/nginx.conf
 cp /mnt/s3fs/www.conf /etc/php-fpm.d/www.conf
+
+systemctl start nginx
+systemctl enable nginx
 systemctl start php-fpm
+systemctl enable php-fpm
 
 # Retrieve static file.
 
