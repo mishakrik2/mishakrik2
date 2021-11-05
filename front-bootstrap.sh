@@ -40,20 +40,6 @@ systemctl enable nginx
 systemctl start php-fpm
 systemctl enable php-fpm
 
-# Install MariaDB
-
-amazon-linux-extras install -y mariadb10.5
-
-systemctl mariadb start
-systemctl mariadb enable
-
-# Install PMA
-
-wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz -P /usr/share/nginx/html/
-tar xvzf /usr/share/nginx/html/phpMyAdmin-latest-all-languages.tar.gz -C /usr/share/nginx/html/
-mv '/usr/share/nginx/html/phpMyAdmin-5.1.1-all-languages' '/usr/share/nginx/html/phpmyadmin'
-rm -rf /usr/share/nginx/html/phpMyAdmin-latest-all-languages.tar.gz
-
 # Retrieve static file.
 
 cp /mnt/s3fs/index.php /usr/share/nginx/html/index.php
