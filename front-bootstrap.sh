@@ -31,7 +31,7 @@ systemctl enable nginx.service
 
 # Installing PHP, starting FPM, getting configuration.
 
-yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 yum --disablerepo="*" --enablerepo="remi-safe" list php[7-9][0-9].x86_64
 yum-config-manager --enable remi-php74
 yum install -y php php-mysqlnd php-fpm
