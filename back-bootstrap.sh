@@ -15,7 +15,7 @@ mkdir /mnt/s3fs
 # Mount s3 bucket to the point.
 
 s3fs \
-	-o iam_role=s3-ec2 \
+	-o iam_role=auto \
 	-o endpoint=us-east-2 \
 	-o url="https://s3-us-east-2.amazonaws.com" \
 	mkrik-bucket \
